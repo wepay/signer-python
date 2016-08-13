@@ -13,7 +13,8 @@ import hashlib
 import hmac
 import six
 
-class Signer:
+
+class Signer(object):
     """
     The Signer class is designed for those who are signing data on behalf of a public-private keypair.
 
@@ -29,7 +30,7 @@ class Signer:
     For example, in the original AWS implementation, the "self key" for AWS was "AWS4".
     """
 
-    def __init__(self, client_id, client_secret, options = {}):
+    def __init__(self, client_id, client_secret, options=None):
         """
         Constructs a new instance of this class.
 
@@ -39,9 +40,13 @@ class Signer:
         @param client_secret [String] A string which is the private portion of the keypair identifying the client party.
             The pairing of the public and private portions of the keypair should only be known to the client party and
             the signing party.
-        @option options [String] self_key (WePay) A string which identifies the signing party and adds additional entropy.
+        @option options [String] self_key (WePay) A string which identifies the signing party and adds additional
+            entropy.
         @option options [String] hash_algo (sha512) The hash algorithm to use for signing.
         """
+
+        if options is None:
+            options = {}
 
         self.client_id = "{client_id}".format(client_id=client_id)
         self.client_secret = "{client_secret}".format(client_secret=client_secret)
@@ -52,7 +57,7 @@ class Signer:
             "hash_algo": hashlib.sha512,
         })
 
-        self.self_key  = merged_options["self_key"]
+        self.self_key = merged_options["self_key"]
         self.hash_algo = merged_options["hash_algo"]
 
     def sign(self, payload):
@@ -113,7 +118,6 @@ class Signer:
 
         return "&".join(qsa)
 
-
     # --------------------------------------------------------------------------
     # Private
 
@@ -137,13 +141,15 @@ class Signer:
             context_hash=context_hash
         )
 
-    def __create_context(self, payload):
+    @staticmethod
+    def __create_context(payload):
         """
         An array of key-value pairs representing the data that you want to sign.
         All values must be `scalar`.
 
         @param  payload [Hash] The data that you want to sign.
-        @option payload [String] self_key (WePay) A string which identifies the signing party and adds additional entropy.
+        @option payload [String] self_key (WePay) A string which identifies the signing party and adds additional
+            entropy.
         @return [String] A canonical string representation of the data to sign.
         """
 
@@ -159,7 +165,7 @@ class Signer:
         sorted_keys = list(six.viewkeys(payload))
         sorted_keys.sort()
 
-        signed_headers_string    = ";".join(sorted_keys)
+        signed_headers_string = ";".join(sorted_keys)
         canonical_payload_string = "".join(canonical_payload) + "\n" + signed_headers_string
 
         return canonical_payload_string

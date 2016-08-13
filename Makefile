@@ -17,9 +17,9 @@ deactivate:
 
 .PHONY: lint
 lint:
-	autopep8 --max-line-length 120 --in-place **/*.py
-	autoflake --in-place --remove-unused-variables **/*.py
-	for py in $$(ls **/*.py); do pylint --rcfile .pylint $$py; done;
+	autopep8 --max-line-length 120 --in-place wepay/**/*.py
+	autoflake --in-place --remove-unused-variables wepay/**/*.py
+	for py in $$(ls wepay/**/*.py); do pylint --rcfile .pylint $$py; done;
 
 .PHONY: test
 test:
