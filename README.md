@@ -1,14 +1,13 @@
-# WePay Signer for Ruby
+# WePay Signer for Python
 
-[![Source](http://img.shields.io/badge/source-wepay/signer–ruby-blue.svg?style=flat-square)](https://github.com/wepay/signer-ruby)
+[![Source](http://img.shields.io/badge/source-wepay/signer–python-blue.svg?style=flat-square)](https://github.com/wepay/signer-python)
 [![Latest Stable Version](https://img.shields.io/gem/v/wepay-signer.svg?style=flat-square)](https://rubygems.org/gems/wepay-signer)
 [![Total Downloads](https://img.shields.io/gem/dt/wepay-signer.svg?style=flat-square)](https://rubygems.org/gems/wepay-signer)
-[![Open Issues](http://img.shields.io/github/issues/wepay/signer-ruby.svg?style=flat-square)](https://github.com/wepay/signer-ruby/issues)
-[![Build Status](http://img.shields.io/travis/wepay/signer-ruby/master.svg?style=flat-square)](https://travis-ci.org/wepay/signer-ruby)
-[![Coverage Status](http://img.shields.io/coveralls/wepay/signer-ruby/master.svg?style=flat-square)](https://coveralls.io/r/wepay/signer-ruby?branch=master)
-[![Code Climate](http://img.shields.io/codeclimate/github/wepay/signer-ruby.svg?style=flat-square)](https://codeclimate.com/github/wepay/signer-ruby)
-[![Code Quality](http://img.shields.io/scrutinizer/g/wepay/signer-ruby.svg?style=flat-square)](https://scrutinizer-ci.com/g/wepay/signer-ruby)
-[![Author](http://img.shields.io/badge/author-@biplap–sarkar-blue.svg?style=flat-square)](https://github.com/biplap-sarkar)
+[![Open Issues](http://img.shields.io/github/issues/wepay/signer-python.svg?style=flat-square)](https://github.com/wepay/signer-python/issues)
+[![Build Status](http://img.shields.io/travis/wepay/signer-python/master.svg?style=flat-square)](https://travis-ci.org/wepay/signer-python)
+[![Coverage Status](http://img.shields.io/coveralls/wepay/signer-python/master.svg?style=flat-square)](https://coveralls.io/r/wepay/signer-python?branch=master)
+[![Code Climate](http://img.shields.io/codeclimate/github/wepay/signer-python.svg?style=flat-square)](https://codeclimate.com/github/wepay/signer-python)
+[![Code Quality](http://img.shields.io/scrutinizer/g/wepay/signer-python.svg?style=flat-square)](https://scrutinizer-ci.com/g/wepay/signer-python)
 [![Author](http://img.shields.io/badge/author-@skyzyx-blue.svg?style=flat-square)](https://github.com/skyzyx)
 
 The **Signer** class is designed for those who are signing data on behalf of a public-private keypair.
@@ -23,31 +22,32 @@ This project uses [Semantic Versioning](http://semver.org) for managing backward
 
 > **NOTE:** To use this gem alongside the `wepay` gem, the `wepay` gem MUST be at least version `0.2.0`.
 
-* [API Reference](https://wepay.github.io/signer-ruby/)
+* [API Reference](https://wepay.github.io/signer-python/)
 
 ## Examples
 
-(Using [word_wrap()](https://gist.github.com/js-coder/3581285) for line wrapping.)
+```python
+from __future__ import print_function
+from wepay.signer import Signer
 
-```ruby
 client_id = 'your_client_id'
 client_secret = 'your_client_secret'
 
-signer = WePay::Signer.new(client_id, client_secret)
+signer = Signer(client_id, client_secret)
 signature = signer.sign({
-  :token        => your_token,
-  :page         => wepay_page_to_visit,
-  :redirect_uri => partner_page_to_return_to,
+    'token':        your_token,
+    'page':         wepay_page_to_visit,
+    'redirect_uri': partner_page_to_return_to,
 })
 
-puts signature.word_wrap(64)
+print(signature.word_wrap(64))
 #=> dfbffab5b6f7156402da8147886bba3eba67bd5baf2e780ba9d39e8437db7c47
 #=> 35e9a0b834aa21ac76f98da8c52a2a0cd1b0192d0f0df5c98e3848b1b2e1a037
 
 querystring = signer.generate_query_string_params({
-  :token        => your_token,
-  :page         => wepay_page_to_visit,
-  :redirect_uri => partner_page_to_return_to,
+    'token':        your_token,
+    'page':         wepay_page_to_visit,
+    'redirect_uri': partner_page_to_return_to,
 })
 
 #=> client_id=your_client_id&
@@ -58,14 +58,14 @@ querystring = signer.generate_query_string_params({
 
 ## Installation
 
-```ruby
-gem 'wepay-signer'
+```bash
+pip install wepay-signer
 ```
 
 And include it in your scripts:
 
-```ruby
-require 'wepay-signer'
+```python
+from wepay.signer import Signer
 ```
 
 
@@ -185,7 +185,7 @@ Here's the process for contributing:
 
 * Copyright (c) 2015-2016 [WePay](http://wepay.com)
 
-See also the list of [contributors](https://github.com/wepay/signer-ruby/graphs/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/wepay/signer-python/graphs/contributors) who participated in this project.
 
 Licensed for use under the terms of the [Apache 2.0] license.
 
