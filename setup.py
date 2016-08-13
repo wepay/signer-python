@@ -1,36 +1,35 @@
-import setuptools
+from setuptools import setup, find_packages
 
-def readme():
-    with open('README.rst') as f:
-        return f.read()
+version = '1.0.0'
 
-setuptools.setup(
-    name='yml2json',
-    license='MIT',
-    author='Ryan Parman',
-    author_email='ryan@ryanparman.com',
-    url="https://github.com/skyzyx/yml2json",
-    install_requires=[
-        'python-dateutil==2.5.2',
-        'PyYAML==3.11',
-    ],
-    version='1.1.3',
-    packages=['yml2json'],
-    description='Converts YAML input to JSON output.',
-    long_description=readme(),
-    keywords='yaml yml json',
+requires = [
+    'autoflake==0.6.6',
+    'autopep8==1.2.4',
+    'pylint==1.6.4',
+    'six==1.10.0',
+]
+
+setup(
+    name='wepay-signer',
+    license="Apache License 2.0",
+    author='WePay',
+    author_email='api@wepay.com',
+    url="https://github.com/wepay/signer-python",
+    install_requires=requires,
+    version=version,
+    packages=find_packages(exclude=['tests*']),
+    description='A Modern Python 2/3 SDK for signing WePay requests.',
+    long_description=open('README.rst').read(),
+    keywords='wepay signer',
     classifiers=[
-        'Development Status :: 4 - Beta',
-        'Environment :: Console',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
+        'License :: OSI Approved :: Apache Software License',
+        'Programming Language :: Python',
         'Programming Language :: Python :: 2.7',
-        'Topic :: Utilities',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
     ],
-    entry_points={
-        'console_scripts': [
-            'yml2json=yml2json:main',
-        ],
-    },
 )
