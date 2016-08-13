@@ -5,38 +5,53 @@ all:
 
 .PHONY: install
 install:
-	bundle install
+	pip install -r requirements.txt
+
+.PHONY: activate
+activate:
+	$$(which bash) -c "source vendor/bin/activate"
+
+.PHONY: deactivate
+deactivate:
+	deactivate
+
+.PHONY: lint
+lint:
+	autopep8 --max-line-length 120 --in-place **/*.py
+	autoflake --in-place --remove-unused-variables **/*.py
+	for py in $$(ls **/*.py); do pylint --rcfile .pylint $$py; done;
 
 .PHONY: test
-test: install
-	ruby ./test_helper.rb
+test:
+	pip install -e .
+	nose2
 
 #-------------------------------------------------------------------------------
 
 .PHONY: docs
-docs: install
-	yard
+docs:
 
 .PHONY: pushdocs
 pushdocs: docs
 	rm -Rf /tmp/gh-pages
-	git clone git@github.com:wepay/signer-ruby.git --branch gh-pages --single-branch /tmp/gh-pages
-	cp -Rf ./doc/* /tmp/gh-pages/
+	git clone git@github.devops.wepay-inc.com:devtools/datacenter.git --branch gh-pages --single-branch /tmp/gh-pages
+	cp -Rf ./docs/* /tmp/gh-pages/
 	cd /tmp/gh-pages/ && git add . && git commit -a -m "Automated commit on $$(date)" && git push origin gh-pages
 
 #-------------------------------------------------------------------------------
 
-.PHONY: gem
-gem: version
-	@sed "s/@@version@@/$$(cat .\/VERSION)/" < ./wepay-signer.gemtmpl > ./wepay-signer.gemspec
-	@cat ./wepay-signer.gemspec | sed "s/@@date@@/$$(date "+%Y-%m-%d")/" > ./wepay-signer.gemspec
-	gem build wepay-signer.gemspec
+.PHONY: buildpip
+build:
+	python setup.py sdist
+	python setup.py bdist_wheel
 
-.PHONY: pushgem
-pushgem: gem
-	gem push wepay-signer-$$(cat ./VERSION).gem
+.PHONY: readme
+readme:
+	pandoc -r markdown_github -w rst -o README.rst README.md
 
-#-------------------------------------------------------------------------------
+.PHONY: pushpip
+push:
+	twine upload dist/*
 
 .PHONY: tag
 tag:
@@ -59,9 +74,6 @@ version:
 	@read -p "Enter new version number: " nv; \
 	printf "$$nv" > ./VERSION
 
-#-------------------------------------------------------------------------------
-
 .PHONY: clean
 clean:
-	rm *.gem
-	rm *.gemspec
+	rm -Rf **/*.pyc **/__pycache__ build/ dist/ docs/ *.egg-info/
