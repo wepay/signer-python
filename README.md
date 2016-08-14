@@ -1,13 +1,8 @@
 # WePay Signer for Python
 
 [![Source](http://img.shields.io/badge/source-wepay/signer–python-blue.svg?style=flat-square)](https://github.com/wepay/signer-python)
-[![Latest Stable Version](https://img.shields.io/gem/v/wepay-signer.svg?style=flat-square)](https://rubygems.org/gems/wepay-signer)
-[![Total Downloads](https://img.shields.io/gem/dt/wepay-signer.svg?style=flat-square)](https://rubygems.org/gems/wepay-signer)
 [![Open Issues](http://img.shields.io/github/issues/wepay/signer-python.svg?style=flat-square)](https://github.com/wepay/signer-python/issues)
 [![Build Status](http://img.shields.io/travis/wepay/signer-python/master.svg?style=flat-square)](https://travis-ci.org/wepay/signer-python)
-[![Coverage Status](http://img.shields.io/coveralls/wepay/signer-python/master.svg?style=flat-square)](https://coveralls.io/r/wepay/signer-python?branch=master)
-[![Code Climate](http://img.shields.io/codeclimate/github/wepay/signer-python.svg?style=flat-square)](https://codeclimate.com/github/wepay/signer-python)
-[![Code Quality](http://img.shields.io/scrutinizer/g/wepay/signer-python.svg?style=flat-square)](https://scrutinizer-ci.com/g/wepay/signer-python)
 [![Author](http://img.shields.io/badge/author-@skyzyx-blue.svg?style=flat-square)](https://github.com/skyzyx)
 
 The **Signer** class is designed for those who are signing data on behalf of a public-private keypair.
