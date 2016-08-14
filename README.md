@@ -1,8 +1,19 @@
 # WePay Signer for Python
 
 [![Source](http://img.shields.io/badge/source-wepay/signer–python-blue.svg?style=flat-square)](https://github.com/wepay/signer-python)
+[![Downloads](https://img.shields.io/pypi/dm/wepay-signer.svg?style=flat-square)](https://github.com/wepay/signer-python/releases)
+[![Release](https://img.shields.io/github/release/wepay/signer-python.svg?style=flat-square)](https://github.com/wepay/signer-python/releases)
+[![Pypi Release](https://img.shields.io/pypi/v/wepay-signer.svg?style=flat-square)](https://pypi.python.org/pypi/wepay-signer)
 [![Open Issues](http://img.shields.io/github/issues/wepay/signer-python.svg?style=flat-square)](https://github.com/wepay/signer-python/issues)
 [![Build Status](http://img.shields.io/travis/wepay/signer-python/master.svg?style=flat-square)](https://travis-ci.org/wepay/signer-python)
+[![Implementation](https://img.shields.io/pypi/implementation/wepay-signer.svg?style=flat-square)](https://python.org)
+[![Python Versions](https://img.shields.io/pypi/pyversions/wepay-signer.svg?style=flat-square)](https://python.org)
+[![Package Format](https://img.shields.io/pypi/format/wepay-signer.svg?style=flat-square)](http://pythonwheels.com)
+[![Stability](https://img.shields.io/pypi/status/wepay-signer.svg?style=flat-square)](https://pypi.python.org/pypi/wepay-signer)
+[![Coverage Status](http://img.shields.io/coveralls/wepay/signer-python/master.svg?style=flat-square)](https://coveralls.io/r/wepay/signer-python?branch=master)
+[![Code Climate](http://img.shields.io/codeclimate/github/wepay/signer-python.svg?style=flat-square)](https://codeclimate.com/github/wepay/signer-python)
+[![Code Quality](http://img.shields.io/scrutinizer/g/wepay/signer-python.svg?style=flat-square)](https://scrutinizer-ci.com/g/wepay/signer-python)
+[![License](https://img.shields.io/github/license/wepay/signer-python.svg?style=flat-square)](https://github.com/wepay/signer-python/blob/master/LICENSE.rst)
 [![Author](http://img.shields.io/badge/author-@skyzyx-blue.svg?style=flat-square)](https://github.com/skyzyx)
 
 The **Signer** class is designed for those who are signing data on behalf of a public-private keypair.
@@ -14,8 +25,6 @@ The "signing party" has a simple identifier which acts as an additional piece of
 Based on a simplified version of the AWS Signature v4.
 
 This project uses [Semantic Versioning](http://semver.org) for managing backwards-compatibility.
-
-> **NOTE:** To use this gem alongside the `wepay` gem, the `wepay` gem MUST be at least version `0.2.0`.
 
 * [API Reference](https://wepay.github.io/signer-python/)
 
@@ -135,67 +144,29 @@ Running `make` by itself will show you a list of available sub-commands.
 ```bash
 $ make
 all
+build
+clean
 docs
-gem
 install
+install-python
+lint
+push
 pushdocs
-pushgem
+readme
 tag
 test
 version
 ```
 
-### `make pushdocs`
-You will need to have write-access to the `wepay/signer-ruby` repository on GitHub. You should have already set up:
-
-* Your SSH key with your GitHub account.
-* Had your GitHub user given write-access to the repository.
-
-Then you can run:
-
-```bash
-make pushdocs
-```
-
-You can view your changes at <https://wepay.github.io/signer-ruby/>.
-
-### `make pushgem`
-You will need to have pulled-down the proper gem credentials first. When prompted, enter your
-[RubyGems](http://rubygems.org) password.
-
-Login and view your [RubyGems profile page](https://rubygems.org/profile/edit) to see the proper command.
-
-Then you can run:
-
-```bash
-make pushgem
-```
-
-If you need to [add an additional gem owner](https://stackoverflow.com/questions/8487218/how-to-add-more-owners-to-a-gem-in-rubygem):
-
-```bash
-gem owner wepay -a api@wepay.com
-```
-
-You can view your changes at <https://rubygems.org/gems/wepay-signer>.
-
-### `make tag`
-
-This will leverage Chag to generate a commit for the tag. Then you can run:
-
-```bash
-make tag
-```
-
 ### Drafting a GitHub release
 
-1. Go to https://github.com/wepay/signer-ruby/tags
+1. Go to https://github.com/wepay/signer-python/tags
 1. Find the new tag that you just pushed. Click the ellipsis (`…`) to see the commit notes. Copy these.
 1. To the right, choose _Add release notes_. Your _Tag version_ should be pre-filled.
 1. The _Release title_ should match your _Tag version_.
 1. Inside _Describe this release_, paste the notes that you copied on the previous page.
 1. Choose _Publish release_.
-1. Your release should now be the latest. https://github.com/wepay/signer-ruby/releases/latest
+1. Your release should now be the latest. https://github.com/wepay/signer-python/releases/latest
 
 
 ## Contributing

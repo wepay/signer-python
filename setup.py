@@ -21,6 +21,7 @@ setup(
     description='A Modern Python 2/3 SDK for signing WePay requests.',
     long_description=open('README.rst').read(),
     keywords='wepay signer',
+    test_suite='nose2.collector.collector',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
