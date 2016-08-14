@@ -3,23 +3,31 @@ all:
 
 #-------------------------------------------------------------------------------
 
+.PHONY: install-python
+install-python:
+	versions=""
+
+	for version in "3.6-dev" "3.5.2" "3.4.5" "3.3.6" "2.7.12" "pypy-5.3.1" "pypy3-2.4.0"; do \
+		pyenv install $$version; \
+		versions="$$version $$versions"; \
+	done;
+
+	@ echo "==================================================================="
+	@ echo "pyenv rehash"
+	@ echo "eval \"\$(pyenv init -)\";"
+	@ echo "pyenv global system $$versions;"
+	@ echo "==================================================================="
+
 .PHONY: install
 install:
 	pip install -r requirements.txt
-
-.PHONY: activate
-activate:
-	$$(which bash) -c "source vendor/bin/activate"
-
-.PHONY: deactivate
-deactivate:
-	deactivate
 
 .PHONY: lint
 lint:
 	autopep8 --max-line-length 120 --in-place wepay/**/*.py
 	autoflake --in-place --remove-unused-variables wepay/**/*.py
-	for py in $$(ls wepay/**/*.py); do pylint --rcfile .pylint $$py; done;
+	pylint --rcfile .pylint wepay/
+	pylint --rcfile .pylint tests/*.py --disable F0401
 
 .PHONY: test
 test:

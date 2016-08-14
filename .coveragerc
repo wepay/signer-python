@@ -1,0 +1,7 @@
+[run]
+branch = True
+include =
+    wepay/*
+
+[report]
+show_missing = 1

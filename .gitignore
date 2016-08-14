@@ -1,8 +1,10 @@
 *.egg-info/
 *.pyc
+.coverage
+.tox/
+.vendor/
 build/
+coverage.xml
 dist/
 docs/
-.vendor/
-.vendor2/
-.vendor3/
+htmlcov
