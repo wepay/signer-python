@@ -29,5 +29,4 @@ traceback2==1.4.0
 twine==1.8.1
 unittest2==1.1.0
 virtualenv==15.0.3
--e git+git@github.com:wepay/signer-python.git@764b9be6b248822c4768196f9caac608e4e1368d#egg=wepay_signer
 wrapt==1.10.8
