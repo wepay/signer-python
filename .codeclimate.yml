@@ -1,14 +1,12 @@
 engines:
   pep8:
     enabled: true
-  fixme:
-    enabled: true
   duplication:
     enabled: true
     config:
       languages:
-      - python
+        - python
 
 ratings:
-  paths:
-  - wepay/
+   paths:
+     - "**.py"
