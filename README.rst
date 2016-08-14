@@ -1,7 +1,21 @@
 WePay Signer for Python
 =======================
 
-|Source| |Downloads| |Release| |Pypi Release| |Open Issues| |Build Status| |Implementation| |Python Versions| |Package Format| |Stability| |Coverage Status| |Code Climate| |Code Quality| |License| |Author|
+| |Source|
+| |Downloads|
+| |Release|
+| |Pypi Release|
+| |Open Issues|
+| |Build Status|
+| |Implementation|
+| |Python Versions|
+| |Package Format|
+| |Stability|
+| |Coverage Status|
+| |Code Climate|
+| |Code Quality|
+| |License|
+| |Author|
 
 The **Signer** class is designed for those who are signing data on
 behalf of a public-private keypair.
