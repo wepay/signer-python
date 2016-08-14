@@ -165,6 +165,30 @@ test
 version
 ```
 
+### `make readme`
+
+If you make changes to `README.md`, then this will use [Pandoc] to output a `README.rst` file in the [reStructuredText] format used by [distutils], [Sphinx] and most of the Python community.
+
+You must have [Pandoc] installed on your local system.
+
+> **NOTE:** Initial install via `brew install pandoc` takes about 8–10 hours. Updates are much faster. [Using the installer](https://github.com/jgm/pandoc/releases) is **much** faster for initial installation, but updates are entirely manual.
+
+### `make version`
+
+Sets the version number that will be used by other `make` tasks related to packaging and bundling.
+
+### `make tag`
+
+This will make sure that the `CHANGELOG.md` is properly datestamped, add the CHANGELOG contents to the Git commit message, commit them, then create a Git commit which can be pushed upstream.
+
+### `make buildpip`
+
+This will bundle-up your package in preparation for uploading to [Pypi].
+
+### `make pushpip`
+
+This will take your bundled package and upload it securely to [Pypi] using the `twine` package.
+
 ### Drafting a GitHub release
 
 1. Go to https://github.com/wepay/signer-python/tags
@@ -197,7 +221,12 @@ See also the list of [contributors](https://github.com/wepay/signer-python/graph
 Licensed for use under the terms of the [Apache 2.0] license.
 
   [Apache 2.0]: http://opensource.org/licenses/Apache-2.0
-  [tox]: https://tox.readthedocs.io
-  [pyenv]: https://github.com/yyuu/pyenv
+  [distutils]: https://docs.python.org/3/library/distutils.html
+  [Pandoc]: http://pandoc.org
   [pyenv-virtualenvwrapper]: https://github.com/yyuu/pyenv-virtualenvwrapper
+  [pyenv]: https://github.com/yyuu/pyenv
+  [reStructuredText]: http://docutils.sourceforge.net/rst.html
+  [Sphinx]: http://www.sphinx-doc.org
+  [tox]: https://tox.readthedocs.io
   [VirtualEnv]: https://virtualenv.pypa.io/en/stable/
+  [Pypi]: https://pypi.python.org/pypi

@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '1.0.0'
+version = open('VERSION').read()
 
 requires = [
     'autoflake==0.6.6',

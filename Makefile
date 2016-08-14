@@ -18,10 +18,6 @@ install-python:
 	@ echo "pyenv global system $$versions;"
 	@ echo "==================================================================="
 
-.PHONY: install
-install:
-	pip install -r requirements.txt
-
 .PHONY: lint
 lint:
 	autopep8 --max-line-length 120 --in-place wepay/**/*.py
@@ -48,17 +44,17 @@ pushdocs: docs
 
 #-------------------------------------------------------------------------------
 
-.PHONY: buildpip
-build:
-	python setup.py sdist
-	python setup.py bdist_wheel
-
 .PHONY: readme
 readme:
 	pandoc -r markdown_github -w rst -o README.rst README.md
 
+.PHONY: buildpip
+buildpip: clean
+	python setup.py sdist
+	python setup.py bdist_wheel
+
 .PHONY: pushpip
-push:
+pushpip: buildpip
 	twine upload dist/*
 
 .PHONY: tag
@@ -70,9 +66,10 @@ tag:
 	@echo "---------------------------------------------------------------------"
 	@read -p "Press any key to continue, or press Control+C to cancel. " x;
 
+	chag update $$(cat ./VERSION)
 	git add .
 	git commit -a -m "Preparing the $$(cat ./VERSION) release."
-	git tag $$(cat ./VERSION)
+	chag tag $$(cat ./VERSION)
 
 #-------------------------------------------------------------------------------
 
