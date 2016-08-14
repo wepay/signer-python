@@ -45,6 +45,7 @@ Examples
 
     from __future__ import print_function
     from wepay.signer import Signer
+    import textwrap
 
     client_id = 'your_client_id'
     client_secret = 'your_client_secret'
@@ -56,7 +57,7 @@ Examples
         'redirect_uri': partner_page_to_return_to,
     })
 
-    print(signature.word_wrap(64))
+    print(textwrap.wrap(signature, 64))
     #=> dfbffab5b6f7156402da8147886bba3eba67bd5baf2e780ba9d39e8437db7c47
     #=> 35e9a0b834aa21ac76f98da8c52a2a0cd1b0192d0f0df5c98e3848b1b2e1a037
 
@@ -110,6 +111,11 @@ Development
 -  Install the ``requirements.txt``.
 
 ``bash   pip install -r requirements.txt``
+
+-  When you make changes, make sure that you run the linter and fix
+   anything that's broken.
+
+``bash   make lint``
 
 Testing
 -------
@@ -174,6 +180,49 @@ sub-commands.
     tag
     test
     version
+
+``make readme``
+~~~~~~~~~~~~~~~
+
+If you make changes to ``README.md``, then this will use
+`Pandoc <http://pandoc.org>`__ to output a ``README.rst`` file in the
+`reStructuredText <http://docutils.sourceforge.net/rst.html>`__ format
+used by
+`distutils <https://docs.python.org/3/library/distutils.html>`__,
+`Sphinx <http://www.sphinx-doc.org>`__ and most of the Python community.
+
+You must have `Pandoc <http://pandoc.org>`__ installed on your local
+system.
+
+    **NOTE:** Initial install via ``brew install pandoc`` takes about
+    8–10 hours. Updates are much faster. `Using the
+    installer <https://github.com/jgm/pandoc/releases>`__ is **much**
+    faster for initial installation, but updates are entirely manual.
+
+``make version``
+~~~~~~~~~~~~~~~~
+
+Sets the version number that will be used by other ``make`` tasks
+related to packaging and bundling.
+
+``make tag``
+~~~~~~~~~~~~
+
+This will make sure that the ``CHANGELOG.md`` is properly datestamped,
+add the CHANGELOG contents to the Git commit message, commit them, then
+create a Git commit which can be pushed upstream.
+
+``make buildpip``
+~~~~~~~~~~~~~~~~~
+
+This will bundle-up your package in preparation for uploading to
+`Pypi <https://pypi.python.org/pypi>`__.
+
+``make pushpip``
+~~~~~~~~~~~~~~~~
+
+This will take your bundled package and upload it securely to
+`Pypi <https://pypi.python.org/pypi>`__ using the ``twine`` package.
 
 Drafting a GitHub release
 ~~~~~~~~~~~~~~~~~~~~~~~~~
