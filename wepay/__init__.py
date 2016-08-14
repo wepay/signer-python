@@ -1,8 +1,9 @@
-#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
-Copyright (c) 2015-2016 WePay.
+Parent namespace for WePay modules.
 
-http://opensource.org/licenses/Apache2.0
+Copyright (c) 2015-2016 [WePay](https://wepay.com).
+
+<http://opensource.org/licenses/Apache2.0>
 """

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 """
-Copyright (c) 2015-2016 WePay.
-
 Based on a stripped-down version of the AWS Signature v4 implementation.
 
-http://opensource.org/licenses/Apache2.0
+Copyright (c) 2015-2016 [WePay](https://wepay.com).
+
+<http://opensource.org/licenses/Apache2.0>
 """
 
 from __future__ import print_function
@@ -28,57 +28,83 @@ class Signer(object):
     (as is common with GPG signing).
 
     For example, in the original AWS implementation, the "self key" for AWS was "AWS4".
+
+    **Compatibility:**
+
+    Tested against the following Python versions:
+
+    * Python 2.7
+    * Python 3.3
+    * Python 3.4
+    * Python 3.5
+    * Python 3.6 (dev)
+    * Pypy (~2.7.10)
+    * Pypy3 (~3.2.5)
+
+    **Import:**
+
+        from wepay.signer import Signer
+
     """
 
-    def __init__(self, client_id, client_secret, options=None):
+    def __init__(self, client_id, client_secret, self_key="WePay", hash_algo=None):
         """
         Constructs a new instance of this class.
 
-        @param client_id [String] A string which is the public portion of the keypair identifying the client party. The
+        `client_id (string)`: A string which is the public portion of the keypair identifying the client party. The
             pairing of the public and private portions of the keypair should only be known to the client party and the
             signing party.
-        @param client_secret [String] A string which is the private portion of the keypair identifying the client party.
+
+        `client_secret (string)`: A string which is the private portion of the keypair identifying the client party.
             The pairing of the public and private portions of the keypair should only be known to the client party and
             the signing party.
-        @option options [String] self_key (WePay) A string which identifies the signing party and adds additional
-            entropy.
-        @option options [String] hash_algo (sha512) The hash algorithm to use for signing.
+
+        `self_key (string)`: A string which identifies the signing party and adds additional entropy. The default value
+            is `WePay`.
+
+        `hash_algo (object)`: The hash algorithm to use for signing. The default value is `hashlib.sha512`. Allowed
+            values are any `hashlib.*` method name that is listed in `hashlib.algorithms_available`.
         """
 
-        if options is None:
-            options = {}
+        if hash_algo is None:
+            hash_algo = hashlib.sha512
 
         self.client_id = "{client_id}".format(client_id=client_id)
+        """Returns the value of attribute client_id."""
+
         self.client_secret = "{client_secret}".format(client_secret=client_secret)
+        """Returns the value of attribute client_secret."""
 
-        merged_options = options.copy()
-        merged_options.update({
-            "self_key":  "WePay",
-            "hash_algo": hashlib.sha512,
-        })
+        self.self_key = "{self_key}".format(self_key=self_key)
+        """Returns the value of attribute self_key. The default value is `WePay`."""
 
-        self.self_key = merged_options["self_key"]
-        self.hash_algo = merged_options["hash_algo"]
+        self.hash_algo = hash_algo
+        """Returns the value of attribute hash_algo. The default value is `hashlib.sha512`."""
 
-    def sign(self, payload):
+    def sign(self, **kwargs):
         """
         Sign the payload to produce a signature for its contents.
 
-        @param payload [Hash] The data to generate a signature for.
-        @option payload [required, String] token The one-time-use token.
-        @option payload [required, String] page The WePay URL to access.
-        @option payload [required, String] redirect_uri The partner URL to return to once the action is completed.
-        @return [String] The signature for the payload contents.
+        `token (string)`: The one-time-use token. **Required**.
+
+        `page (string)`: The WePay URL to access. **Required**.
+
+        `redirect_uri (string)`: The partner URL to return to once the action is completed. **Required**.
+
+        `return (string)`: The signature for the payload contents.
         """
 
-        merged_payload = payload.copy()
-        merged_payload.update({
-            'client_id':     self.client_id,
-            'client_secret': self.client_secret,
-        })
+        merged_payload = {}
+
+        if kwargs is not None:
+            for key, value in six.iteritems(kwargs):
+                merged_payload[key] = value
+
+        merged_payload['client_id'] = self.client_id
+        merged_payload['client_secret'] = self.client_secret
 
         scope = self.__create_scope()
-        context = self.__create_context(merged_payload)
+        context = self.__create_context(**merged_payload)
         s2s = self.__create_string_to_sign(scope, context)
         signing_key = self.__get_signing_salt()
 
@@ -90,31 +116,33 @@ class Signer(object):
 
         return signature
 
-    def generate_query_string_params(self, payload):
+    def generate_query_string_params(self, **kwargs):
         """
         Signs and generates the query string URL parameters to use when making a request.
 
         If the `client_secret` key is provided, then it will be automatically excluded from the result.
 
-        @param  payload [Hash] The data to generate a signature for.
-        @option payload [required, String] token The one-time-use token.
-        @option payload [required, String] page The WePay URL to access.
-        @option payload [required, String] redirect_uri The partner URL to return to once the action is completed.
-        @return [String] The query string parameters to append to the end of a URL.
+        `token (string)`: The one-time-use token. **Required**.
+
+        `page (string)`: The WePay URL to access. **Required**.
+
+        `redirect_uri (string)`: The partner URL to return to once the action is completed. **Required**.
+
+        `return (string)`: The query string parameters to append to the end of a URL.
         """
 
-        payload.pop('client_secret', None)
+        kwargs.pop('client_secret', None)
 
-        signed_token = self.sign(payload)
-        payload['client_id'] = self.client_id
-        payload['stoken'] = signed_token
+        signed_token = self.sign(**kwargs)
+        kwargs['client_id'] = self.client_id
+        kwargs['stoken'] = signed_token
         qsa = []
 
-        payload_keys = list(six.viewkeys(payload))
+        payload_keys = list(six.viewkeys(kwargs))
         payload_keys.sort()
 
         for key in payload_keys:
-            qsa.append("{}={}".format(key, payload[key]))
+            qsa.append("{}={}".format(key, kwargs[key]))
 
         return "&".join(qsa)
 
@@ -125,9 +153,11 @@ class Signer(object):
         """
         Creates the string-to-sign based on a variety of factors.
 
-        @param scope [String] The results of a call to the `__create_scope()` method.
-        @param context [String] The results of a call to the `__create_context()` method.
-        @return [String] The final string to be signed.
+        `scope (string)`: The results of a call to the `__create_scope()` method.
+
+        `context (string)`: The results of a call to the `__create_context()` method.
+
+        `return (string)`: The final string to be signed.
         """
 
         scope_hash = hashlib.new(self.hash_algo().name, scope.encode('utf-8')).hexdigest()
@@ -142,27 +172,29 @@ class Signer(object):
         )
 
     @staticmethod
-    def __create_context(payload):
+    def __create_context(**kwargs):
         """
         An array of key-value pairs representing the data that you want to sign.
         All values must be `scalar`.
 
-        @param  payload [Hash] The data that you want to sign.
-        @option payload [String] self_key (WePay) A string which identifies the signing party and adds additional
-            entropy.
-        @return [String] A canonical string representation of the data to sign.
+        `kwargs (dictionary)`: The data that you want to sign.
+
+        `self_key (string)`: A string which identifies the signing party and adds additional
+            entropy. The default value is `WePay`.
+
+        `return (string)`: A canonical string representation of the data to sign.
         """
 
         canonical_payload = []
 
-        for k in six.viewkeys(payload):
-            val = "{}".format(payload[k]).lower()
+        for k in six.viewkeys(kwargs):
+            val = "{}".format(kwargs[k]).lower()
             key = "{}".format(k).lower()
             canonical_payload.append("{}={}\n".format(key, val))
 
         canonical_payload.sort()
 
-        sorted_keys = list(six.viewkeys(payload))
+        sorted_keys = list(six.viewkeys(kwargs))
         sorted_keys.sort()
 
         signed_headers_string = ";".join(sorted_keys)
@@ -174,7 +206,7 @@ class Signer(object):
         """
         Gets the salt value that should be used for signing.
 
-        @return [String] The signing salt.
+        `return (string,bytearray)`: The signing salt.
         """
 
         self_key_sign = hmac.new(
@@ -201,7 +233,7 @@ class Signer(object):
         """
         Creates the "scope" in which the signature is valid.
 
-        @return [String] The string which represents the scope in which the signature is valid.
+        `return (string)`: The string which represents the scope in which the signature is valid.
         """
 
         return "{self_key}/{client_id}/signer".format(

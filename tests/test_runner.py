@@ -50,21 +50,21 @@ class Test(unittest.TestCase):
 
     def test_sign(self):
         """Generate a new signature and ensure it matches what is expected with the same inputs."""
-        signature = self.signer.sign({
-            'page': DEFAULT_PAGE,
-            'redirect_uri': DEFAULT_REDIRECT_URI,
-            'token': DEFAULT_TOKEN,
-        })
+        signature = self.signer.sign(
+            page=DEFAULT_PAGE,
+            redirect_uri=DEFAULT_REDIRECT_URI,
+            token=DEFAULT_TOKEN
+        )
 
         self.assertEqual(DEFAULT_SIGNATURE, signature)
 
     def test_query_string_params(self):
         """Generate a new querystring with signature and ensure it matches what is expected with the same inputs."""
-        querystring = self.signer.generate_query_string_params({
-            'page': DEFAULT_PAGE,
-            'redirect_uri': DEFAULT_REDIRECT_URI,
-            'token': DEFAULT_TOKEN,
-        })
+        querystring = self.signer.generate_query_string_params(
+            page=DEFAULT_PAGE,
+            redirect_uri=DEFAULT_REDIRECT_URI,
+            token=DEFAULT_TOKEN
+        )
 
         self.assertEqual(
             DEFAULT_QS.format(DEFAULT_CLIENT_ID, DEFAULT_PAGE, DEFAULT_REDIRECT_URI, DEFAULT_SIGNATURE, DEFAULT_TOKEN),
@@ -73,13 +73,13 @@ class Test(unittest.TestCase):
 
     def test_query_string_params_client_secret(self):
         """Generate a new querystring with signature and ensure it matches what is expected with the same inputs."""
-        querystring = self.signer.generate_query_string_params({
-            'page': DEFAULT_PAGE,
-            'redirect_uri': DEFAULT_REDIRECT_URI,
-            'token': DEFAULT_TOKEN,
-            'client_id': DEFAULT_CLIENT_ID,
-            'client_secret': DEFAULT_CLIENT_SECRET,
-        })
+        querystring = self.signer.generate_query_string_params(
+            page=DEFAULT_PAGE,
+            redirect_uri=DEFAULT_REDIRECT_URI,
+            token=DEFAULT_TOKEN,
+            client_id=DEFAULT_CLIENT_ID,
+            client_secret=DEFAULT_CLIENT_SECRET
+        )
 
         self.assertEqual(
             DEFAULT_QS.format(DEFAULT_CLIENT_ID, DEFAULT_PAGE, DEFAULT_REDIRECT_URI, DEFAULT_SIGNATURE, DEFAULT_TOKEN),
