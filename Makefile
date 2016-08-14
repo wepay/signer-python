@@ -34,12 +34,13 @@ test:
 
 .PHONY: docs
 docs:
+	pdoc --html --html-dir docs --overwrite --all-submodules --external-links wepay/signer
 
 .PHONY: pushdocs
 pushdocs: docs
 	rm -Rf /tmp/gh-pages
-	git clone git@github.devops.wepay-inc.com:devtools/datacenter.git --branch gh-pages --single-branch /tmp/gh-pages
-	cp -Rf ./docs/* /tmp/gh-pages/
+	git clone git@github.com:wepay/signer-python.git --branch gh-pages --single-branch /tmp/gh-pages
+	cp -Rf ./docs/signer/* /tmp/gh-pages/
 	cd /tmp/gh-pages/ && git add . && git commit -a -m "Automated commit on $$(date)" && git push origin gh-pages
 
 #-------------------------------------------------------------------------------
@@ -62,7 +63,7 @@ tag:
 	@ if [ $$(git status -s -uall | wc -l) != 0 ]; then echo 'ERROR: Git workspace must be clean.'; exit 1; fi;
 
 	@echo "This release will be tagged as: $$(cat ./VERSION)"
-	@echo "This version should match your gem. If it doesn't, re-run 'make gem'."
+	@echo "This version should match your package. If it doesn't, re-run 'make buildpip'."
 	@echo "---------------------------------------------------------------------"
 	@read -p "Press any key to continue, or press Control+C to cancel. " x;
 

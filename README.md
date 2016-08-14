@@ -132,7 +132,20 @@ We use [tox] to handle local testing across multiple versions of Python. We inst
 
 ## API Reference
 
-TBD.
+### Building local docs
+
+```bash
+make docs
+open docs/signer/index.html
+```
+
+## Building and pushing docs
+
+```bash
+make pushdocs
+```
+
+Docs can be viewed at <https://wepay.github.io/signer-python/>.
 
 
 ## Deploying

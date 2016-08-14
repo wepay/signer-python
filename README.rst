@@ -127,7 +127,22 @@ Python at a time with `pyenv <https://github.com/yyuu/pyenv>`__.
 API Reference
 -------------
 
-TBD.
+Building local docs
+~~~~~~~~~~~~~~~~~~~
+
+.. code:: bash
+
+    make docs
+    open docs/signer/index.html
+
+Building and pushing docs
+-------------------------
+
+.. code:: bash
+
+    make pushdocs
+
+Docs can be viewed at https://wepay.github.io/signer-python/.
 
 Deploying
 ---------
