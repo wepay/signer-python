@@ -33,6 +33,7 @@ This project uses [Semantic Versioning](http://semver.org) for managing backward
 ```python
 from __future__ import print_function
 from wepay.signer import Signer
+import textwrap
 
 client_id = 'your_client_id'
 client_secret = 'your_client_secret'
@@ -44,7 +45,7 @@ signature = signer.sign({
     'redirect_uri': partner_page_to_return_to,
 })
 
-print(signature.word_wrap(64))
+print(textwrap.wrap(signature, 64))
 #=> dfbffab5b6f7156402da8147886bba3eba67bd5baf2e780ba9d39e8437db7c47
 #=> 35e9a0b834aa21ac76f98da8c52a2a0cd1b0192d0f0df5c98e3848b1b2e1a037
 
@@ -101,6 +102,12 @@ from wepay.signer import Signer
 
   ```bash
   pip install -r requirements.txt
+  ```
+
+* When you make changes, make sure that you run the linter and fix anything that's broken.
+
+  ```bash
+  make lint
   ```
 
 
