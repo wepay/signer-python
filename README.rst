@@ -136,7 +136,7 @@ Building local docs
     open docs/signer/index.html
 
 Building and pushing docs
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code:: bash
 

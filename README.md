@@ -139,7 +139,7 @@ make docs
 open docs/signer/index.html
 ```
 
-## Building and pushing docs
+### Building and pushing docs
 
 ```bash
 make pushdocs
