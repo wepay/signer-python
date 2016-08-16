@@ -69,7 +69,7 @@ tag:
 
 	chag update $$(cat ./VERSION)
 	git add .
-	git commit -a -m "Preparing the $$(cat ./VERSION) release."
+	git commit -S -a -m "Preparing the $$(cat ./VERSION) release."
 	chag tag $$(cat ./VERSION)
 
 #-------------------------------------------------------------------------------
