@@ -9,6 +9,7 @@ Copyright (c) 2015-2016 [WePay](https://wepay.com).
 """
 
 from __future__ import print_function
+import collections
 import hashlib
 import hmac
 import six
@@ -136,15 +137,8 @@ class Signer(object):
         signed_token = self.sign(**kwargs)
         kwargs['client_id'] = self.client_id
         kwargs['stoken'] = signed_token
-        qsa = []
-
-        payload_keys = list(six.viewkeys(kwargs))
-        payload_keys.sort()
-
-        for key in payload_keys:
-            qsa.append("{}={}".format(key, kwargs[key]))
-
-        return "&".join(qsa)
+        sorted_keyval = collections.OrderedDict(sorted(kwargs.items()))
+        return six.moves.urllib.parse.urlencode(sorted_keyval, True)
 
     # --------------------------------------------------------------------------
     # Private

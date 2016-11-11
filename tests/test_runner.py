@@ -19,8 +19,10 @@ DEFAULT_CLIENT_ID = 12173158495
 DEFAULT_CLIENT_SECRET = '1594122c5c36f438f8ba'
 DEFAULT_SIGNATURE = ('c2de34c15cd76f797cf80781747da3874639a827a4cb79dcd862cc17b35cf2e2c721ea7d49ab'
                      '9f60590d637ae0f51fd4ed8ddb551b922e0cd7e35a13b86de360')
+ENCODED_PAGE = 'https%3A%2F%2Fwepay.com%2Faccount%2F12345'
 DEFAULT_PAGE = 'https://wepay.com/account/12345'
 DEFAULT_REDIRECT_URI = 'https://partnersite.com/home'
+ENCODED_REDIRECT_URI = 'https%3A%2F%2Fpartnersite.com%2Fhome'
 DEFAULT_QS = 'client_id={}&page={}&redirect_uri={}&stoken={}&token={}'
 DEFAULT_TOKEN = '10c936ca-5e7c-508b-9e60-b211c20be9bc'
 
@@ -67,7 +69,7 @@ class Test(unittest.TestCase):
         )
 
         self.assertEqual(
-            DEFAULT_QS.format(DEFAULT_CLIENT_ID, DEFAULT_PAGE, DEFAULT_REDIRECT_URI, DEFAULT_SIGNATURE, DEFAULT_TOKEN),
+            DEFAULT_QS.format(DEFAULT_CLIENT_ID, ENCODED_PAGE, ENCODED_REDIRECT_URI, DEFAULT_SIGNATURE, DEFAULT_TOKEN),
             querystring
         )
 
@@ -82,7 +84,7 @@ class Test(unittest.TestCase):
         )
 
         self.assertEqual(
-            DEFAULT_QS.format(DEFAULT_CLIENT_ID, DEFAULT_PAGE, DEFAULT_REDIRECT_URI, DEFAULT_SIGNATURE, DEFAULT_TOKEN),
+            DEFAULT_QS.format(DEFAULT_CLIENT_ID, ENCODED_PAGE, ENCODED_REDIRECT_URI, DEFAULT_SIGNATURE, DEFAULT_TOKEN),
             querystring
         )
 
