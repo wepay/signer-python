@@ -7,7 +7,7 @@ all:
 install-python:
 	versions=""
 
-	for version in "3.6-dev" "3.5.2" "3.4.5" "3.3.6" "2.7.12" "pypy-5.3.1" "pypy3-2.4.0"; do \
+	for version in "3.6.0" "3.5.2" "3.4.5" "3.3.6" "2.7.13" "pypy-5.3.1" "pypy3-2.4.0"; do \
 		pyenv install $$version; \
 		versions="$$version $$versions"; \
 	done;
